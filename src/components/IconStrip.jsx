@@ -1,19 +1,20 @@
-import { faMessage } from '@fortawesome/free-regular-svg-icons'
+import { faCircleUser, faMessage } from '@fortawesome/free-regular-svg-icons'
+import { faFilm, faGear, faPeopleGroup } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useState } from 'react'
 
 const icons = [
   { id: 'chats', icon: <FontAwesomeIcon icon={faMessage}/>, label: 'Chats', hasNotification: true },
-  { id: 'status', icon: '🌀', label: 'Status' },
-  { id: 'groups', icon: '👥', label: 'Communities' },
-  { id: 'settings', icon: '⚙️', label: 'Settings' },
+  { id: 'status', icon: <FontAwesomeIcon icon={faFilm}/>, label: 'Status' },
+  { id: 'groups', icon: <FontAwesomeIcon icon={faPeopleGroup}/>, label: 'Communities' },
+  { id: 'settings', icon: <FontAwesomeIcon icon={faGear}/>, label: 'Settings' },
 ]
 
 export default function IconStrip() {
   const [hovered, setHovered] = useState(null)
 
   return (
-    <div className="flex flex-col items-center w-14 bg-white border-r text-gray-700 pt-4 space-y-6 relative">
+    <div className="flex flex-col items-center w-14 bg-background-color border-r text-gray-700 pt-4 space-y-6 relative">
       
       {icons.map(({ id, icon, label, hasNotification }) => (
         <div
@@ -46,11 +47,12 @@ export default function IconStrip() {
 
       {/* Profile image at the bottom */}
       <div className="mb-4">
-        <img
+        {/* <img
           src="/profile.png"
           alt="Profile"
           className="w-8 h-8 rounded-full border"
-        />
+        /> */}
+        <FontAwesomeIcon icon={faCircleUser}/>
       </div>
     </div>
   )

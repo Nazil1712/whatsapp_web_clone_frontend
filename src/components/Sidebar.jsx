@@ -1,43 +1,132 @@
-export default function Sidebar() {
+import { useDispatch, useSelector } from "react-redux";
+import { fetchMessagesByUserIdAsync } from "../features/messages/messageSlice";
+import { fetchUserByIdAsync } from "../features/user/userSlice";
+import {
+  NewChat,
+  OptionsIcon,
+  SearchIcon,
+  WhatsAppIcon,
+} from "../assets/icons";
+
+export default function Sidebar({ selectedUser }) {
+  const users = useSelector((state) => state.users.users);
+  const dispatch = useDispatch();
+
+  const chats = [
+    { id: 1, name: "Nazil (You)", preview: "Check out this job..." },
+    { id: 2, name: "User 2", preview: "Typing..." },
+    { id: 3, name: "User 3", preview: "Walekum assalam" },
+    { id: 4, name: "Nazil (You)", preview: "Check out this job..." },
+    { id: 5, name: "User 2", preview: "Typing..." },
+    { id: 6, name: "User 3", preview: "Walekum assalam" },
+    { id: 7, name: "Nazil (You)", preview: "Check out this job..." },
+    { id: 8, name: "User 2", preview: "Typing..." },
+    { id: 9, name: "User 3", preview: "Walekum assalam" },
+    { id: 10, name: "Nazil (You)", preview: "Check out this job..." },
+    { id: 11, name: "User 2", preview: "Typing..." },
+    { id: 12, name: "User 3", preview: "Walekum assalam" },
+  ];
+
+  const handleClick = (userId) => {
+    selectedUser(userId);
+    dispatch(fetchMessagesByUserIdAsync(userId));
+    dispatch(fetchUserByIdAsync(userId));
+  };
+
   return (
-    <div className="w-[30%] min-w-[280px] border-r bg-white flex flex-col">
-      <div className="p-4 flex justify-between items-center border-b">
-        <h1 className="font-bold text-green-600 text-xl">WhatsApp</h1>
-        <div className="space-x-3 text-gray-500">
-          <span>📷</span>
-          <span>💬</span>
-          <span>⋮</span>
+    <div className="h-full bg-white border-r border-background-color flex flex-col">
+      {/* <div className="border-b"> */}
+      {/* Top Bar */}
+      {/* Header */}
+      <div className="flex items-center justify-between px-3 sm:px-4  m-1 sm:m-2">
+        <div className="text-green-600 text-lg sm:text-xl font-bold">
+          <WhatsAppIcon className="w-6 h-6 sm:w-7 sm:h-7" />
+        </div>
+        <div className="flex items-center gap-3 sm:gap-4">
+          <div className="p-2 rounded-full hover:bg-background-color cursor-pointer">
+            <NewChat className="w-5 h-5 sm:w-6 sm:h-6 " />
+          </div>
+          <div className="p-2 rounded-full hover:bg-background-color cursor-pointer">
+            <OptionsIcon className="w-5 h-5 sm:w-6 sm:h-6" />
+          </div>
         </div>
       </div>
 
-      <div className="p-2">
-        <input
-          type="text"
-          placeholder="Search or start a new chat"
-          className="w-full px-4 py-2 rounded-full bg-gray-100 focus:outline-none"
-        />
+      {/* Search Bar */}
+      <div className="px-3 sm:px-4 py-2">
+        <div className="flex items-center bg-background-color rounded-full px-2 sm:px-3 py-1.5 sm:py-2">
+          <SearchIcon className="text-gray-500 w-4 h-4 sm:w-5 sm:h-5" />
+          <input
+            type="text"
+            placeholder="Search or start a new chat"
+            className="bg-transparent outline-none w-full text-sm sm:text-base pl-3 sm:pl-4 p-0.5 text-gray-800"
+          />
+        </div>
       </div>
 
-      <div className="flex px-2 py-1 space-x-2 text-sm">
-        {['All', 'Unread', 'Favourites', 'Groups'].map(tab => (
-          <button key={tab} className="px-3 py-1 bg-gray-200 rounded-full">{tab}</button>
+      {/* Tabs */}
+      <div className="flex flex-wrap gap-2 px-3 sm:px-4 pb-2 text-xs sm:text-sm">
+        {["All", "Unread", "Favourites", "Groups"].map((tab, index) => (
+          <button
+            key={tab}
+            className={`px-2 sm:px-3 py-1 rounded-full transition-colors duration-200 ${
+              index === 0
+                ? "bg-green-100 text-green-700 border border-border-color"
+                : "bg-white text-gray-700 border border-border-color"
+            }
+            hover:bg-background-color cursor-pointer
+            `}
+          >
+            {tab}
+          </button>
         ))}
       </div>
 
-      <div className="overflow-y-auto flex-1">
-        {Array.from({ length: 10 }).map((_, i) => (
-          <div key={i} className="flex items-center px-4 py-3 border-b hover:bg-gray-100 cursor-pointer">
-            <div className="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center text-white text-sm">
-              {i + 1}
+      {/* </div> */}
+
+      <div className="overflow-y-auto flex-1 custom-scrollbar max-h-[100vh]">
+        {/* {chats.map((chat) => (
+          <div
+            key={chat.id}
+            className="flex items-center px-4 py-3 hover:bg-gray-100 hover:rounded-lg cursor-pointer transition-all duration-200"
+            onClick={() => onSelectChat(chat.id)}
+          >
+            <div className="w-10 h-10 bg-gray-300 rounded-full flex-shrink-0" />
+            <div className="ml-4 flex-1 overflow-hidden">
+              <div className="font-semibold text-sm sm:text-base truncate">
+                {chat.name}
+              </div>
+              <div className="text-xs sm:text-sm text-gray-600 truncate">
+                {chat.preview}
+              </div>
             </div>
-            <div className="ml-4 flex-1">
-              <div className="font-medium">Contact {i + 1}</div>
-              <div className="text-sm text-gray-500">Last message...</div>
+            <div className="text-[10px] sm:text-xs text-gray-400 ml-2 flex-shrink-0">
+              11:00 am
             </div>
-            <div className="text-xs text-gray-400">11:00 am</div>
+          </div>
+        ))} */}
+
+        {users?.map((user) => (
+          <div
+            key={user.id}
+            className="flex items-center px-4 py-3 hover:bg-background-color hover:rounded-lg cursor-pointer transition-all duration-200 ml-4 mr-4"
+            onClick={() => handleClick(user?.wa_id)}
+          >
+            <div className="w-10 h-10 bg-gray-300 rounded-full flex-shrink-0" />
+            <div className="ml-4 flex-1 overflow-hidden">
+              <div className="font-semibold text-sm sm:text-base truncate">
+                {user.name}
+              </div>
+              <div className="text-xs sm:text-sm text-gray-600 truncate">
+                {user.wa_id}
+              </div>
+            </div>
+            <div className="text-[10px] sm:text-xs text-gray-400 ml-2 flex-shrink-0">
+              11:00 am
+            </div>
           </div>
         ))}
       </div>
     </div>
-  )
+  );
 }
