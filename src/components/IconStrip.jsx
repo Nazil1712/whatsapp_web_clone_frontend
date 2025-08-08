@@ -14,7 +14,7 @@ export default function IconStrip() {
   const [hovered, setHovered] = useState(null)
 
   return (
-    <div className="flex flex-col items-center w-14 bg-background-color border-r text-gray-700 pt-4 space-y-6 relative">
+    <div className="flex h-[100vh] flex-col items-center w-14 bg-background-color border-r text-gray-700 pt-4 space-y-6 relative">
       
       {icons.map(({ id, icon, label, hasNotification }) => (
         <div

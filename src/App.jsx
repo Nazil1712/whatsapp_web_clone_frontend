@@ -33,7 +33,7 @@ export default function App() {
   },[dispatch, users])
 
   return (
-    <div className="flex h-screen overflow-hidden">
+    <div className="flex h-[96vh] overflow-hidden">
       {/* Left Icon Strip - hidden on mobile */}
       <div className="hidden md:flex">
         <IconStrip />

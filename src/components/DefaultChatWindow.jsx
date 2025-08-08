@@ -1,9 +1,10 @@
 import React from 'react'
 import laptopImage from "../assets/chatWindow_default.png"
+import { LockIcon } from '../assets/icons';
 
 const DefaultChatWindow = () => {
   return (
-    <div className="min-h-screen bg-[#f1f1f1] flex flex-col items-center justify-center text-center px-4">
+    <div className="min-h-screen bg-background-color flex flex-col items-center justify-center text-center px-4">
       <div className="max-w-md">
         <img
           src={laptopImage}
@@ -24,7 +25,7 @@ const DefaultChatWindow = () => {
         </button>
 
         <p className="text-xs text-gray-500 mt-10 flex items-center justify-center gap-2">
-          <span role="img" aria-label="lock">🔒</span>
+          <span role="img" aria-label="lock"><LockIcon/></span>
           Your personal messages are end-to-end encrypted
         </p>
       </div>

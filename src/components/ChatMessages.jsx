@@ -7,6 +7,7 @@ import isToday from "dayjs/plugin/isToday";
 import isYesterday from "dayjs/plugin/isYesterday";
 import { useSelector } from "react-redux";
 import { SingleCheckIcon, DoubleCheckIcon } from "../assets/icons";
+import ChatInput from "./ChatInput";
 // import img from "../assets/Whatsapp_default_wallpaper"
 
 dayjs.extend(relativeTime);
@@ -48,9 +49,7 @@ const ChatMessages = () => {
   }
 
   return (
-    <div
-      className="flex flex-col p-4 space-y-6 overflow-y-auto h-full bg-[#efeae2] bg-cover"
-    >
+    <div className="flex flex-col p-4 space-y-6 overflow-y-auto h-[77vh] bg-chat-bg-color bg-cover">
       {groupedMessages &&
         Object?.keys(groupedMessages)
           .sort((a, b) => dayjs(a).unix() - dayjs(b).unix())
