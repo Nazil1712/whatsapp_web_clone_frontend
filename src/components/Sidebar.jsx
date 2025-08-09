@@ -8,29 +8,17 @@ import {
   WhatsAppIcon,
 } from "../assets/icons";
 
-export default function Sidebar({ selectedUser }) {
+export default function Sidebar({setSelectedUser}) {
   const users = useSelector((state) => state.users.users);
+  const selectedUser = useSelector((state) => state.users?.selectedUser);
+
   const dispatch = useDispatch();
 
-  const chats = [
-    { id: 1, name: "Nazil (You)", preview: "Check out this job..." },
-    { id: 2, name: "User 2", preview: "Typing..." },
-    { id: 3, name: "User 3", preview: "Walekum assalam" },
-    { id: 4, name: "Nazil (You)", preview: "Check out this job..." },
-    { id: 5, name: "User 2", preview: "Typing..." },
-    { id: 6, name: "User 3", preview: "Walekum assalam" },
-    { id: 7, name: "Nazil (You)", preview: "Check out this job..." },
-    { id: 8, name: "User 2", preview: "Typing..." },
-    { id: 9, name: "User 3", preview: "Walekum assalam" },
-    { id: 10, name: "Nazil (You)", preview: "Check out this job..." },
-    { id: 11, name: "User 2", preview: "Typing..." },
-    { id: 12, name: "User 3", preview: "Walekum assalam" },
-  ];
-
-  const handleClick = (userId) => {
-    selectedUser(userId);
-    dispatch(fetchMessagesByUserIdAsync(userId));
-    dispatch(fetchUserByIdAsync(userId));
+  const handleClick = (user) => {
+    // console.log("User Id",userId)
+    setSelectedUser(user);
+    dispatch(fetchMessagesByUserIdAsync(user?.wa_id));
+    dispatch(fetchUserByIdAsync(user?.wa_id));
   };
 
   return (
@@ -109,8 +97,12 @@ export default function Sidebar({ selectedUser }) {
         {users?.map((user) => (
           <div
             key={user.id}
-            className="flex items-center px-4 py-3 hover:bg-background-color hover:rounded-lg cursor-pointer transition-all duration-200 ml-4 mr-4"
-            onClick={() => handleClick(user?.wa_id)}
+            className={`flex items-center px-4 py-3 hover:bg-background-color hover:rounded-lg cursor-pointer transition-all duration-200 ml-4 mr-4 ${
+              selectedUser?.wa_id === user?.wa_id
+                ? "bg-background-color rounded-lg"
+                : ""
+            }`}
+            onClick={() => handleClick(user)}
           >
             <div className="w-10 h-10 bg-gray-300 rounded-full flex-shrink-0" />
             <div className="ml-4 flex-1 overflow-hidden">
@@ -121,9 +113,9 @@ export default function Sidebar({ selectedUser }) {
                 {user.wa_id}
               </div>
             </div>
-            <div className="text-[10px] sm:text-xs text-gray-400 ml-2 flex-shrink-0">
+            {/* <div className="text-[10px] sm:text-xs text-gray-400 ml-2 flex-shrink-0">
               11:00 am
-            </div>
+            </div> */}
           </div>
         ))}
       </div>

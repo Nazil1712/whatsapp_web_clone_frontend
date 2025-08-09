@@ -1,25 +1,65 @@
 // ChatMessages.jsx
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import localizedFormat from "dayjs/plugin/localizedFormat";
 import isToday from "dayjs/plugin/isToday";
 import isYesterday from "dayjs/plugin/isYesterday";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { SingleCheckIcon, DoubleCheckIcon } from "../assets/icons";
 import ChatInput from "./ChatInput";
 // import img from "../assets/Whatsapp_default_wallpaper"
+import { formatTime, getStatusIcon } from "../utilities/helper";
+import { addMessage } from "../features/messages/messageSlice";
 
 dayjs.extend(relativeTime);
 dayjs.extend(localizedFormat);
 dayjs.extend(isToday);
 dayjs.extend(isYesterday);
 
-const ChatMessages = () => {
+const ChatMessages = ({ socket }) => {
   const userMessages = useSelector((state) => state.messages?.userMessages);
   const selectedUser = useSelector((state) => state.users?.selectedUser);
+  // const chats = document.getElementById("chats")
+  const dispatch = useDispatch();
 
-  // console.log("Messages in window",userMessages)
+  // console.log(chats)
+
+  if (userMessages) {
+    console.log("UserMessages", userMessages);
+  }
+
+  useEffect(() => {
+    if (!socket) return;
+
+    const handleMessageAdded = ({
+      toUserWaId,
+      message,
+      fromUserWaId,
+      timestamp,
+    }) => {
+      dispatch(
+        addMessage({
+          from: fromUserWaId,
+          to: toUserWaId,
+          message,
+          createdAt: timestamp,
+          status: "sent",
+        })
+      );
+    };
+
+    socket.on("messageAdded", handleMessageAdded);
+
+    // cleanup: remove listener when component unmounts or socket changes
+    return () => {
+      socket.off("messageAdded", handleMessageAdded);
+    };
+  }, [socket, dispatch]);
+
+  // Ref to track the last message
+  const bottomRef = useRef(null);
+
   // Group userMessages by date
   const groupedMessages = userMessages?.reduce((groups, msg) => {
     const date = dayjs(msg.createdAt).format("YYYY-MM-DD");
@@ -28,7 +68,7 @@ const ChatMessages = () => {
     return groups;
   }, {});
 
-  // console.log("Grouped Messages",groupedMessages)
+  console.log("Grouped Messages", groupedMessages);
 
   // Helper to format date headings like WhatsApp
   const formatDateHeading = (date) => {
@@ -37,24 +77,27 @@ const ChatMessages = () => {
     return dayjs(date).format("MMMM D, YYYY");
   };
 
-  // Helper to format time like "11:05 am"
-  const formatTime = (ts) => dayjs(ts).format("h:mm a");
-
   if (groupedMessages) {
-    // console.log("Sorted Messages",Object?.keys(groupedMessages)
-    // .sort((a, b) => dayjs(a).unix() - dayjs(b).unix()))
-    // const sortedDates = Object?.keys(groupedMessages)
-    //   .sort((a, b) => dayjs(a).unix() - dayjs(b).unix())
-    // console.log("Sorted Dates",sortedDates)
+    Object.keys(groupedMessages).map((v1) => {
+      groupedMessages[v1].sort(
+        (a, b) => new Date(a.createdAt) - new Date(b.createdAt)
+      );
+    });
   }
 
+  useEffect(() => {
+    if (selectedUser && bottomRef.current) {
+      bottomRef.current.scrollIntoView({ behavior: "auto", block: "end" });
+    }
+  }, [userMessages, selectedUser]);
+
   return (
-    <div className="flex flex-col p-4 space-y-6 overflow-y-auto h-[77vh] bg-chat-bg-color bg-cover">
+    <div className="flex flex-col p-4 space-y-6 overflow-y-auto h-[79.5vh] bg-chat-bg-color bg-cover">
       {groupedMessages &&
         Object?.keys(groupedMessages)
           .sort((a, b) => dayjs(a).unix() - dayjs(b).unix())
           .map((date) => (
-            <div key={date}>
+            <div key={date} id="chats">
               {/* Date separator */}
               <div className="flex justify-center mb-4">
                 <span className="bg-white text-gray-700 text-xs px-3 py-1 rounded-lg">
@@ -68,30 +111,6 @@ const ChatMessages = () => {
 
                 console.log("Message", msg);
                 // Function to return status icon
-                const getStatusIcon = (status) => {
-                  switch (status) {
-                    case "sent":
-                      return (
-                        <span className="text-gray-500">
-                          <SingleCheckIcon />
-                        </span>
-                      );
-                    case "delivered":
-                      return (
-                        <span className="text-gray-500">
-                          <DoubleCheckIcon />
-                        </span>
-                      );
-                    case "read":
-                      return (
-                        <span className="text-blue-500">
-                          <DoubleCheckIcon />
-                        </span>
-                      );
-                    default:
-                      return null;
-                  }
-                };
 
                 return (
                   <div
@@ -119,6 +138,9 @@ const ChatMessages = () => {
               })}
             </div>
           ))}
+
+      {/* Empty div to anchor scroll */}
+      <div ref={bottomRef} style={{ height: "10px" }} />
     </div>
   );
 };

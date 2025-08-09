@@ -9,7 +9,7 @@ const initialState = {
 export const fetchMessagesByUserIdAsync = createAsyncThunk(
   "messages/fetchMessagesByUserIdAsync",
   async (userId) => {
-    // console.log("Thunk called...")
+    console.log("Thunk called...",userId)
     const response = await fetchMessagesByUserId(userId);
     return response.data;
   }
@@ -19,7 +19,9 @@ export const messageSlice = createSlice({
     name: "messages",
     initialState,
     reducers: {
-        
+        addMessage: (state, action) => {
+            state.userMessages.push(action.payload);
+        }
     },
     extraReducers: (builder)=>{
         builder
@@ -39,5 +41,7 @@ export const messageSlice = createSlice({
             });
     }
 })
+
+export const {addMessage} = messageSlice.actions;
 
 export default messageSlice.reducer;

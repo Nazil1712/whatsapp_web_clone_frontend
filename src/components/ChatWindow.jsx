@@ -2,7 +2,7 @@ import ChatHeader from "./ChatHeader";
 import ChatInput from "./ChatInput";
 import ChatMessages from "./ChatMessages";
 
-export default function ChatWindow({handleBack}) {
+export default function ChatWindow({handleBack, socket, currentUser}) {
   // const userMessages = useSelector((state)=>state.messages?.userMessages)
   // const selectedUser = useSelector((state)=>state.users?.selectedUser)
 
@@ -10,8 +10,8 @@ export default function ChatWindow({handleBack}) {
   return (
     <>
       <ChatHeader handleBack={handleBack}/>
-      <ChatMessages />
-      <ChatInput/>
+      <ChatMessages socket={socket}/>
+      <ChatInput socket={socket} currentUser={currentUser}/>
     </>
   )
 }
