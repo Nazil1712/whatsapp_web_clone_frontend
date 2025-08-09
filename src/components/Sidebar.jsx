@@ -22,7 +22,7 @@ export default function Sidebar({setSelectedUser}) {
   };
 
   return (
-    <div className="h-[95vh] bg-white border-r border-background-color flex flex-col">
+    <div className="h-screen bg-white border-r border-background-color flex flex-col">
       {/* <div className="border-b"> */}
       {/* Top Bar */}
       {/* Header */}

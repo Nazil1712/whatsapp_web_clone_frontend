@@ -12,7 +12,15 @@ import DefaultChatWindow from "./components/DefaultChatWindow";
 import { io } from "socket.io-client";
 import { fetchMessagesByUserIdAsync } from "./features/messages/messageSlice";
 
-const socket = io.connect("http://localhost:5000");
+const SOCKET_URL = import.meta.env.VITE_API_URL; 
+
+// const socket = io.connect("http://localhost:5000");
+const socket = io.connect(SOCKET_URL, {
+  path: '/socket.io',
+  transports: ['websocket'],
+  withCredentials: true,
+  reconnectionAttempts: 5
+});
 
 export default function App() {
   const [selectedUser, setSelectedUser] = useState(null);
