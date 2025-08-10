@@ -8,6 +8,18 @@ import {
   WhatsAppIcon,
 } from "../assets/icons";
 
+function UserShimmer() {
+  return (
+    <div className="flex items-center px-4 py-3 ml-4 mr-4">
+      <div className="w-10 h-10 bg-gray-300 rounded-full animate-pulse flex-shrink-0" />
+      <div className="ml-4 flex-1 overflow-hidden">
+        <div className="w-3/4 h-3 bg-gray-300 rounded animate-pulse mb-2"></div>
+        <div className="w-1/2 h-2 bg-gray-200 rounded animate-pulse"></div>
+      </div>
+    </div>
+  );
+}
+
 export default function Sidebar({ setSelectedUser }) {
   const users = useSelector((state) => state.users.users);
   const selectedUser = useSelector((state) => state.users?.selectedUser);
@@ -72,31 +84,32 @@ export default function Sidebar({ setSelectedUser }) {
 
       {/* </div> */}
 
-        <div className="flex flex-col gap-2 overflow-y-auto flex-1 custom-scrollbar max-h-[100vh]">
-          {users?.map((user) => (
-            <div
-              key={user.id}
-              className={`flex items-center px-4 py-3 hover:bg-background-color hover:rounded-lg cursor-pointer transition-all duration-200 ml-4 mr-4 ${
-                selectedUser?.wa_id === user?.wa_id
-                  ? "bg-background-color rounded-lg"
-                  : ""
-              }`}
-              onClick={() => handleClick(user)}
-            >
-              <div className="w-10 h-10 bg-gray-300 rounded-full flex-shrink-0" />
-              <div className="ml-4 flex-1 overflow-hidden">
-                <div className="font-semibold text-sm sm:text-base truncate">
-                  {user.name}
-                </div>
-                <div className="text-xs sm:text-sm text-gray-600 truncate">
-                  {user.wa_id}
+      <div className="flex flex-col gap-2 overflow-y-auto flex-1 custom-scrollbar max-h-[100vh]">
+        {users?.length > 0
+          ? users?.map((user) => (
+              <div
+                key={user.id}
+                className={`flex items-center px-4 py-3 hover:bg-background-color hover:rounded-lg cursor-pointer transition-all duration-200 ml-4 mr-4 ${
+                  selectedUser?.wa_id === user?.wa_id
+                    ? "bg-background-color rounded-lg"
+                    : ""
+                }`}
+                onClick={() => handleClick(user)}
+              >
+                <div className="w-10 h-10 bg-gray-300 rounded-full flex-shrink-0" />
+                <div className="ml-4 flex-1 overflow-hidden">
+                  <div className="font-semibold text-sm sm:text-base truncate">
+                    {user.name}
+                  </div>
+                  <div className="text-xs sm:text-sm text-gray-600 truncate">
+                    {user.wa_id}
+                  </div>
                 </div>
               </div>
-              {/* <div className="text-[10px] sm:text-xs text-gray-400 ml-2 flex-shrink-0">
-              11:00 am
-            </div> */}
-            </div>
-          ))}
+            ))
+          : Array(8)
+              .fill(null)
+              .map((_, i) => <UserShimmer key={i} />)}
       </div>
     </div>
   );
