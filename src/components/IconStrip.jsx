@@ -68,45 +68,64 @@ export default function IconStrip() {
 
         <div className="flex-1" />
 
-        <SettingsIcon />
+        <div className="flex flex-col items-center space-y-4 p-2 bg-gray-100">
+          {/* Settings Icon */}
+          <div className="relative group cursor-pointer hover:bg-gray-300 rounded-full p-2">
+            <SettingsIcon />
+            <span className="absolute left-12 top-1/2 -translate-y-1/2 px-2 py-1 text-sm text-white bg-black rounded opacity-0 group-hover:opacity-100 transition-opacity">
+              Settings
+            </span>
+          </div>
 
-        <div className="mb-4">
-          <FontAwesomeIcon icon={faCircleUser} />
+          {/* User Icon */}
+          <div className="relative group hover:bg-gray-300 rounded-full p-2">
+            <FontAwesomeIcon
+              icon={faCircleUser}
+              className="text-2xl cursor-pointer"
+            />
+            <span className="absolute left-12 top-1/2 -translate-y-1/2 px-2 py-1 text-sm text-white bg-black rounded opacity-0 group-hover:opacity-100 transition-opacity">
+              Profile
+            </span>
+          </div>
         </div>
       </div>
 
       {/* Mobile Bottom Navigation */}
-      {!isChatOpen && <div className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 flex justify-around items-center h-14 shadow-md">
-        {mobileIcons.map(({ id, icon, label, hasNotification }) => (
-          <button
-            key={id}
-            onClick={() => setActive(id)}
-            className="flex flex-col items-center relative w-full py-1"
-          >
-            <div
-              className={`text-xl ${
-                active === id ? "bg-green-300 text-green-900 p-1 rounded-lg" : "text-black"
-              }`}
+      {!isChatOpen && (
+        <div className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 flex justify-around items-center h-14 shadow-md">
+          {mobileIcons.map(({ id, icon, label, hasNotification }) => (
+            <button
+              key={id}
+              onClick={() => setActive(id)}
+              className="flex flex-col items-center relative w-full py-1 cursor-pointer"
             >
-              {icon}
-            </div>
+              <div
+                className={`text-xl ${
+                  active === id
+                    ? "bg-green-300 text-green-900 p-1 rounded-lg"
+                    : "text-black"
+                }`}
+              >
+                {icon}
+              </div>
 
-            <span
-              className={`text-xs ${
-                active === id ? "text-black font-bold" : "text-black"
-              }`}
-            >
-              {label}
-            </span>
-
-            {hasNotification && (
-              <span className="absolute top-1 right-[30%] bg-green-500 text-white text-[10px] rounded-full px-1">
-                1
+              <span
+                className={`text-xs ${
+                  active === id ? "text-black font-bold" : "text-black"
+                }`}
+              >
+                {label}
               </span>
-            )}
-          </button>
-        ))}
-      </div>}
+
+              {hasNotification && (
+                <span className="absolute top-1 right-[30%] bg-green-500 text-white text-[10px] rounded-full px-1">
+                  1
+                </span>
+              )}
+            </button>
+          ))}
+        </div>
+      )}
     </>
   );
 }

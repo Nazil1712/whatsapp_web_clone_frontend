@@ -1,16 +1,12 @@
 import { useEffect, useState } from "react";
 import IconStrip from "./components/IconStrip";
 import Sidebar from "./components/Sidebar";
-import ChatHeader from "./components/ChatHeader";
-import ChatMessages from "./components/ChatMessages";
-import ChatInput from "./components/ChatInput";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAllUsersAsync } from "./features/user/userSlice";
 import ChatWindow from "./components/ChatWindow";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import DefaultChatWindow from "./components/DefaultChatWindow";
 import { io } from "socket.io-client";
-import { fetchMessagesByUserIdAsync } from "./features/messages/messageSlice";
 
 const SOCKET_URL = import.meta.env.VITE_API_URL; 
 

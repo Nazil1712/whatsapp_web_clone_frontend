@@ -92,7 +92,7 @@ const ChatMessages = ({ socket }) => {
   }, [userMessages, selectedUser]);
 
   return (
-    <div className="flex flex-col p-4 space-y-6 overflow-y-auto h-[79.5vh] bg-chat-bg-color bg-cover">
+    <div className="flex flex-col p-4 space-y-6 overflow-y-auto h-[79vh] md:h-[79.5vh] bg-chat-bg-color bg-cover">
       {groupedMessages &&
         Object?.keys(groupedMessages)
           .sort((a, b) => dayjs(a).unix() - dayjs(b).unix())

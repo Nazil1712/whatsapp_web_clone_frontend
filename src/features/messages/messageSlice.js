@@ -3,17 +3,18 @@ import { fetchMessagesByUserId } from "./messageApi";
 
 const initialState = {
     userMessages: null,
+    latestMessages: null,
     status: "idle"
 }
 
 export const fetchMessagesByUserIdAsync = createAsyncThunk(
   "messages/fetchMessagesByUserIdAsync",
   async (userId) => {
-    console.log("Thunk called...",userId)
     const response = await fetchMessagesByUserId(userId);
     return response.data;
   }
 );
+
 
 export const messageSlice = createSlice({
     name: "messages",
