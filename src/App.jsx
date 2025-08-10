@@ -33,7 +33,7 @@ export default function App() {
 
   // console.log("Users in APp", users)
 
-  console.log("Selected User",selectedUser)
+  // console.log("Selected User",selectedUser)
 
   socket.on("connect", () => {
     // console.log("User connected frontend", socket);
@@ -53,7 +53,7 @@ export default function App() {
       dispatch(fetchAllUsersAsync());
       setUsersLoaded(true);
     }
-    console.log("useEffect() called, users fetched...")
+    // console.log("useEffect() called, users fetched...")
   }, [dispatch, usersLoaded]);
 
   // useEffect(()=>{

@@ -26,7 +26,7 @@ const ChatMessages = ({ socket }) => {
   // console.log(chats)
 
   if (userMessages) {
-    console.log("UserMessages", userMessages);
+    // console.log("UserMessages", userMessages);
   }
 
   useEffect(() => {
@@ -68,7 +68,7 @@ const ChatMessages = ({ socket }) => {
     return groups;
   }, {});
 
-  console.log("Grouped Messages", groupedMessages);
+  // console.log("Grouped Messages", groupedMessages);
 
   // Helper to format date headings like WhatsApp
   const formatDateHeading = (date) => {
@@ -109,7 +109,7 @@ const ChatMessages = ({ socket }) => {
               {groupedMessages[date].map((msg, idx) => {
                 const isFrom = msg.from === selectedUser?.wa_id;
 
-                console.log("Message", msg);
+                // console.log("Message", msg);
                 // Function to return status icon
 
                 return (

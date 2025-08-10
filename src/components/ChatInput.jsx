@@ -9,7 +9,7 @@ export default function ChatInput({ socket, currentUser }) {
   // console.log("CUrrent user", currentUser)
 
   const [message, setMessage] = useState("");
-  console.log(new Date().toString())
+  // console.log(new Date().toString())
 
   // Create a reference for the input
   const inputRef = useRef(null);
@@ -22,7 +22,7 @@ export default function ChatInput({ socket, currentUser }) {
   }, [selectedUser]); // runs every time a chat window changes
 
   const sendMessge = () => {
-    console.log("selected User", selectedUser);
+    // console.log("selected User", selectedUser);
     const timestamp = new Date().toString();
     if (selectedUser && message) {
       socket.emit("sendMessage", {
