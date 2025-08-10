@@ -73,27 +73,6 @@ export default function Sidebar({setSelectedUser}) {
       {/* </div> */}
 
       <div className="overflow-y-auto flex-1 custom-scrollbar max-h-[100vh]">
-        {/* {chats.map((chat) => (
-          <div
-            key={chat.id}
-            className="flex items-center px-4 py-3 hover:bg-gray-100 hover:rounded-lg cursor-pointer transition-all duration-200"
-            onClick={() => onSelectChat(chat.id)}
-          >
-            <div className="w-10 h-10 bg-gray-300 rounded-full flex-shrink-0" />
-            <div className="ml-4 flex-1 overflow-hidden">
-              <div className="font-semibold text-sm sm:text-base truncate">
-                {chat.name}
-              </div>
-              <div className="text-xs sm:text-sm text-gray-600 truncate">
-                {chat.preview}
-              </div>
-            </div>
-            <div className="text-[10px] sm:text-xs text-gray-400 ml-2 flex-shrink-0">
-              11:00 am
-            </div>
-          </div>
-        ))} */}
-
         {users?.map((user) => (
           <div
             key={user.id}

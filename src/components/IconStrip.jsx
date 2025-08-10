@@ -2,12 +2,13 @@ import { faCircleUser, faMessage } from '@fortawesome/free-regular-svg-icons'
 import { faFilm, faGear, faPeopleGroup } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useState } from 'react'
+import { ChannelIcon, ChatsIcon, StatusIcon,CommunitiesIcon, SettingsIcon } from '../assets/icons'
 
 const icons = [
-  { id: 'chats', icon: <FontAwesomeIcon icon={faMessage}/>, label: 'Chats', hasNotification: true },
-  { id: 'status', icon: <FontAwesomeIcon icon={faFilm}/>, label: 'Status' },
-  { id: 'groups', icon: <FontAwesomeIcon icon={faPeopleGroup}/>, label: 'Communities' },
-  { id: 'settings', icon: <FontAwesomeIcon icon={faGear}/>, label: 'Settings' },
+  { id: 'chats', icon: <ChatsIcon/>, label: 'Chats', hasNotification: true },
+  { id: 'status', icon: <StatusIcon/>, label: 'Status' },
+  { id: 'channels', icon: <ChannelIcon/>, label: 'Channels' },
+  { id: 'communities', icon: <CommunitiesIcon/>, label: 'Communities' },
 ]
 
 export default function IconStrip() {
@@ -39,11 +40,13 @@ export default function IconStrip() {
         </div>
       ))}
 
+      <hr className='text-gray-400 w-8' />
+
       {/* Spacer */}
       <div className="flex-1" />
 
       {/* Settings icon */}
-      <div className="mb-4 text-xl hover:text-green-600">⚙️</div>
+      <SettingsIcon/>
 
       {/* Profile image at the bottom */}
       <div className="mb-4">

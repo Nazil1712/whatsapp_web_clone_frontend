@@ -24,6 +24,7 @@ const socket = io.connect(SOCKET_URL, {
 
 export default function App() {
   const [selectedUser, setSelectedUser] = useState(null);
+  const [usersLoaded, setUsersLoaded] = useState(false);
   const dispatch = useDispatch();
   const users = useSelector((state) => state.users.users);
   const [currentUser, setCurrentUser] = useState({
@@ -52,20 +53,22 @@ export default function App() {
   };
 
   useEffect(() => {
-    if (users == null) {
+    if (!usersLoaded) {
       dispatch(fetchAllUsersAsync());
+      setUsersLoaded(true);
     }
-  }, [dispatch, users]);
+    console.log("useEffect() called, users fetched...")
+  }, [dispatch, usersLoaded]);
 
-  useEffect(()=>{
-    socket.on("messageAdded",()=>{
-      console.log("New Message Added into database")
+  // useEffect(()=>{
+  //   socket.on("messageAdded",()=>{
+  //     console.log("New Message Added into database")
 
-      // dispatch(fetchMessagesByUserIdAsync(selectedUser?.wa_id))
-    })
+  //     // dispatch(fetchMessagesByUserIdAsync(selectedUser?.wa_id))
+  //   })
 
-    console.log("UseEffect() callled.....")
-  },[dispatch,selectedUser])
+  //   console.log("UseEffect() callled.....")
+  // },[dispatch,selectedUser])
 
   return (
     <div className="flex overflow-hidden">
