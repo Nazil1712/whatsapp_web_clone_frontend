@@ -81,7 +81,8 @@ export default function Sidebar({ setSelectedUser }) {
             onChange={(e)=>setSearchText(e.target.value)}
             onKeyDown={handleSearch}
             onKeyUp={handleSearch}
-            className="bg-transparent outline-none w-full text-sm sm:text-base pl-3 sm:pl-4 p-0.5 text-gray-800"
+            className="bg-transparent outline-none w-full text-sm 
+            sm:text-base pl-3 sm:pl-4 p-0.5 text-gray-800"
           />
         </div>
       </div>

@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useDispatch, useSelector } from "react-redux";
 import ChatInput from "./ChatInput";
 import { setSelectedUser } from "../features/user/userSlice";
+import { BigSearchIcon, OptionsIcon } from "../assets/icons";
 
 export default function ChatHeader({ handleBack }) {
   // const userMessages = useSelector((state)=>state.messages?.userMessages)
@@ -32,11 +33,13 @@ export default function ChatHeader({ handleBack }) {
             <div className="text-sm text-gray-500">{selectedUser?.wa_id}</div>
           </div>
         </div>
-        <div className="space-x-3 text-gray-500">
-          <span>
-            <FontAwesomeIcon icon={faSearch} />
+        <div className="flex items-center space-x-3 text-gray-500">
+          <span className="cursor-pointer hover:bg-background-color hover:rounded-full p-2 text-black">
+            <BigSearchIcon />
           </span>
-          <span>⋮</span>
+          <span className="cursor-pointer hover:bg-background-color hover:rounded-full p-2 text-black">
+            <OptionsIcon/>
+          </span>
         </div>
       </div>
   );
