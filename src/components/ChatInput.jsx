@@ -43,31 +43,39 @@ export default function ChatInput({ socket, currentUser }) {
   }
 
   return (
-    <div className="p-4 bg-chat-bg-color flex items-center space-x-2">
-      <button className="text-black hover:rouned-full p-2 cursor-pointer">
+  <div className="p-4 bg-chat-bg-color">
+    <div className="flex items-center bg-white rounded-full px-3 py-2 w-full">
+      {/* Plus icon */}
+      <button className="text-black hover:rounded-full hover:bg-background-color cursor-pointer p-2 flex-shrink-0">
         <PlusIcon />
       </button>
+
+      {/* Input */}
       <input
-        ref={inputRef} // attach the ref here
+        ref={inputRef}
         type="text"
         value={message}
         onChange={(e) => setMessage(e.target.value)}
         placeholder="Type a message"
         onKeyDown={handleKeyPress}
-        className="flex-1 rounded-full px-4 py-2 bg-white focus:outline-none"
+        className="flex-1 bg-transparent px-3 focus:outline-none text-sm sm:text-base"
       />
+
+      {/* Mic / Send Icon */}
       {message === "" ? (
-        <button className="text-black p-2 hover:bg-green-600 hover:text-white hover:rounded-full cursor-pointer">
+        <button className="text-black p-2 hover:bg-green-600 hover:text-white hover:rounded-full cursor-pointer flex-shrink-0">
           <MicIcon />
         </button>
       ) : (
         <button
-          className="bg-green-600 text-white rounded-full p-2 hover:opacity-70 cursor-pointer"
+          className="bg-green-600 text-white rounded-full p-2 hover:opacity-80 flex-shrink-0 cursor-pointer"
           onClick={sendMessge}
         >
           <SendMessageIcon />
         </button>
       )}
     </div>
-  );
+  </div>
+);
+
 }

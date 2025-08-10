@@ -7,6 +7,7 @@ import {
   SearchIcon,
   WhatsAppIcon,
 } from "../assets/icons";
+import { useEffect, useState } from "react";
 
 function UserShimmer() {
   return (
@@ -23,8 +24,25 @@ function UserShimmer() {
 export default function Sidebar({ setSelectedUser }) {
   const users = useSelector((state) => state.users.users);
   const selectedUser = useSelector((state) => state.users?.selectedUser);
+  const [searchText, setSearchText] = useState("");
+  const [filteredUsers, setFilteredUsers] = useState([]);
 
   const dispatch = useDispatch();
+
+  useEffect(()=>{
+    if(users!=null) {
+      setFilteredUsers(users)
+    }
+    console.log("Called")
+  },[users])
+  // console.log(users)
+
+  const handleSearch = () =>{
+    const myFilteredUsers = users.filter((user) =>
+      user.name.toLowerCase().includes(searchText.toLowerCase())
+    );
+    setFilteredUsers(myFilteredUsers)
+  }
 
   const handleClick = (user) => {
     // console.log("User Id",userId)
@@ -59,6 +77,10 @@ export default function Sidebar({ setSelectedUser }) {
           <input
             type="text"
             placeholder="Search or start a new chat"
+            value={searchText}
+            onChange={(e)=>setSearchText(e.target.value)}
+            onKeyDown={handleSearch}
+            onKeyUp={handleSearch}
             className="bg-transparent outline-none w-full text-sm sm:text-base pl-3 sm:pl-4 p-0.5 text-gray-800"
           />
         </div>
@@ -85,8 +107,8 @@ export default function Sidebar({ setSelectedUser }) {
       {/* </div> */}
 
       <div className="flex flex-col gap-2 overflow-y-auto flex-1 custom-scrollbar max-h-[100vh]">
-        {users?.length > 0
-          ? users?.map((user) => (
+        {filteredUsers?.length > 0
+          ? filteredUsers?.map((user) => (
               <div
                 key={user.id}
                 className={`flex items-center px-4 py-3 hover:bg-background-color hover:rounded-lg cursor-pointer transition-all duration-200 ml-4 mr-4 ${
