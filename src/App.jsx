@@ -73,7 +73,7 @@ export default function App() {
   return (
     <div className="flex overflow-hidden">
       {/* Left Icon Strip - hidden on mobile */}
-      <div className="hidden md:flex">
+      <div className="flex">
         <IconStrip />
       </div>
 

@@ -8,7 +8,7 @@ import {
   WhatsAppIcon,
 } from "../assets/icons";
 
-export default function Sidebar({setSelectedUser}) {
+export default function Sidebar({ setSelectedUser }) {
   const users = useSelector((state) => state.users.users);
   const selectedUser = useSelector((state) => state.users?.selectedUser);
 
@@ -72,31 +72,31 @@ export default function Sidebar({setSelectedUser}) {
 
       {/* </div> */}
 
-      <div className="overflow-y-auto flex-1 custom-scrollbar max-h-[100vh]">
-        {users?.map((user) => (
-          <div
-            key={user.id}
-            className={`flex items-center px-4 py-3 hover:bg-background-color hover:rounded-lg cursor-pointer transition-all duration-200 ml-4 mr-4 ${
-              selectedUser?.wa_id === user?.wa_id
-                ? "bg-background-color rounded-lg"
-                : ""
-            }`}
-            onClick={() => handleClick(user)}
-          >
-            <div className="w-10 h-10 bg-gray-300 rounded-full flex-shrink-0" />
-            <div className="ml-4 flex-1 overflow-hidden">
-              <div className="font-semibold text-sm sm:text-base truncate">
-                {user.name}
+        <div className="flex flex-col gap-2 overflow-y-auto flex-1 custom-scrollbar max-h-[100vh]">
+          {users?.map((user) => (
+            <div
+              key={user.id}
+              className={`flex items-center px-4 py-3 hover:bg-background-color hover:rounded-lg cursor-pointer transition-all duration-200 ml-4 mr-4 ${
+                selectedUser?.wa_id === user?.wa_id
+                  ? "bg-background-color rounded-lg"
+                  : ""
+              }`}
+              onClick={() => handleClick(user)}
+            >
+              <div className="w-10 h-10 bg-gray-300 rounded-full flex-shrink-0" />
+              <div className="ml-4 flex-1 overflow-hidden">
+                <div className="font-semibold text-sm sm:text-base truncate">
+                  {user.name}
+                </div>
+                <div className="text-xs sm:text-sm text-gray-600 truncate">
+                  {user.wa_id}
+                </div>
               </div>
-              <div className="text-xs sm:text-sm text-gray-600 truncate">
-                {user.wa_id}
-              </div>
-            </div>
-            {/* <div className="text-[10px] sm:text-xs text-gray-400 ml-2 flex-shrink-0">
+              {/* <div className="text-[10px] sm:text-xs text-gray-400 ml-2 flex-shrink-0">
               11:00 am
             </div> */}
-          </div>
-        ))}
+            </div>
+          ))}
       </div>
     </div>
   );

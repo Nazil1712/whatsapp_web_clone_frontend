@@ -1,11 +1,18 @@
 import { faArrowLeft, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ChatInput from "./ChatInput";
+import { setSelectedUser } from "../features/user/userSlice";
 
 export default function ChatHeader({ handleBack }) {
   // const userMessages = useSelector((state)=>state.messages?.userMessages)
   const selectedUser = useSelector((state) => state.users?.selectedUser);
+  const dispatch = useDispatch();
+
+  const handleCloseChat = () => {
+    handleBack()
+    dispatch(setSelectedUser(null));
+  };
 
   return (
       <div className="flex items-center justify-between pt-4 pb-4 pr-4 border-b border-background-color bg-white">
@@ -14,7 +21,7 @@ export default function ChatHeader({ handleBack }) {
             <div className="md:hidden block">
               <FontAwesomeIcon
                 icon={faArrowLeft}
-                onClick={handleBack}
+                onClick={handleCloseChat}
                 className="hover:bg-background-color rounded-full p-2 text-lg cursor-pointer"
               />
             </div>
